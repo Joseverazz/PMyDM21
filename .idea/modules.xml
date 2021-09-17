@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/PMyDM21.iml" filepath="$PROJECT_DIR$/.idea/PMyDM21.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pmydm/pmydm.iml" filepath="$PROJECT_DIR$/pmydm/pmydm.iml" />
+    </modules>
+  </component>
+</project>
