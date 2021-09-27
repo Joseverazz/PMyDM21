@@ -63,7 +63,7 @@ public class Main8 {
         for (Object cart : carton)
         {
             System.out.print(sComma+ cart);
-            sComma = ",";
+            sComma = " ,";
         }
     }
 
