@@ -22,52 +22,60 @@ public class Main8 {
         marcas.add("Lamborghini");
         marcas.add("Porche");
 
-        int nAleatorio;
-        int nCartones = 20000;
-        int nAux;
-        List<String> bingo;
-        List<List> cartones = new ArrayList<>(3);
-        boolean comprobante = false;
-        while (cartones.size() != nCartones){
-            bingo = new ArrayList<>();
-            while(bingo.size()  != 5){
-                nAleatorio = lib.aleatorio(0,5); //(int) (Math.random()*9);
-                if (!bingo.contains(marcas.get(nAleatorio))){
-                    bingo.add(marcas.get(nAleatorio));
-                }
-            }
-            if (cartones.size()!=0)nAux = cartones.size();
-            else nAux = 1;
-            for (int i = 0; i < nAux; i++) {
-                boolean b = false;
-                if (cartones.size()!=0) {
-                    b = cartones.get(i).contains(bingo.get(0)) &&
-                            cartones.get(i).contains(bingo.get(1)) &&
-                            cartones.get(i).contains(bingo.get(2)) &&
-                            cartones.get(i).contains(bingo.get(3)) &&
-                            cartones.get(i).contains(bingo.get(4));
-                }
-                if (!b) {
-                    comprobante = true;
-
-
-                }
-            }
-            if (comprobante){
-                comprobante = false;
+        List<List<String>> cartones = new ArrayList<>(3);
+        int nCartones = 20;
+        for (int i = 0; i < nCartones;) {
+            ArrayList<String> bingo = generarCarton(marcas);
+            if (!esRepetido(cartones, bingo))
+            {
                 cartones.add(bingo);
+                i++;
             }
         }
 
         for (List carton:cartones) {
-            String sComma = "";
-            for (Object cart : carton)
-            {
-                System.out.print(sComma+ cart);
-                sComma = ",";
-            }
+            imprimirCarton(carton);
             System.out.println();
-
         }
+
+
+    }
+
+    private static boolean esRepetido(List<List<String>> cartones, List<String> bingo) {
+        boolean b = false;
+        for (List<String> carton : cartones) {
+            b = esRepetidoCarton(bingo, carton);
+            if (b) break;
+        }
+        return b;
+    }
+
+    private static boolean esRepetidoCarton(List<String> bingo, List<String> carton) {
+        for (String s : bingo) {
+            if (!carton.contains(s))
+                return false;
+        }
+        return true;
+    }
+
+    private static void imprimirCarton(List carton) {
+        String sComma = "";
+        for (Object cart : carton)
+        {
+            System.out.print(sComma+ cart);
+            sComma = ",";
+        }
+    }
+
+    private static ArrayList<String> generarCarton(List<String> marcas){
+        int nAleatorio;
+        ArrayList<String> bingoAux = new ArrayList<>();
+        while(bingoAux.size()  != 5){
+            nAleatorio = lib.aleatorio(0,6); //(int) (Math.random()*9);
+            if (!bingoAux.contains(marcas.get(nAleatorio))){
+                bingoAux.add(marcas.get(nAleatorio));
+            }
+        }
+        return bingoAux;
     }
 }
