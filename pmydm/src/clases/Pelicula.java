@@ -87,6 +87,22 @@ public class Pelicula {
         return peliculaMasAntigua((peliculaMasAntigua(p1,p2,p3)== null)?p1:peliculaMasAntigua(p1,p2,p3),p4);
     }
 
+    public Pelicula peliculaMasAntigua(Pelicula[] peliculas){
+        Pelicula pAux = null;
+        boolean bRepetido = false;
+        for (int i = 1; i < peliculas.length; i++) {
+            pAux = peliculaMasAntigua(peliculas[i],peliculas[i-1]);
+            if (pAux == null) {
+                pAux = peliculas[i];
+                bRepetido = true;
+            }
+            else
+                bRepetido = false;
+        }
+        if (bRepetido) return null;
+        return pAux;
+    }
+
     @Override
     public String toString() {
         return "Pelicula: \n" +
