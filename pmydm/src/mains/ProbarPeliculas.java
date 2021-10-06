@@ -10,6 +10,7 @@ public class ProbarPeliculas {
     public static void main(String[] args) {
         Pelicula pp1 = new Pelicula();
         pp1.setM_sTitulo("1");
+        pp1.setM_sDirector("Manolo");
         pp1.setM_nAnio(1991);
         Pelicula pp2 = new Pelicula();
         pp2.setM_sTitulo("2");
@@ -24,6 +25,7 @@ public class ProbarPeliculas {
         pp4.setM_nAnio(1998);
         Pelicula pp5 = new Pelicula();
         pp5.setM_sTitulo("5");
+        pp5.setM_sDirector("Roberto");
         pp5.setM_nAnio(1998);
 
         Pelicula h = pp3.peliculaMasAntigua(pp1,pp2,pp3);
@@ -36,49 +38,70 @@ public class ProbarPeliculas {
          imprimir las que tengan el mismo director y categoría
          hashmap indexado por título de las 5 películas
          */
-        Pelicula[] pelis = {pp1,pp2,pp3,pp4,pp5};
-        System.out.println(pp1.peliculaMasAntigua(pelis));
-        //mostrarPeliculas(mismoDirector(pelis,"Director"));
-        //mostrarPeliculas(mismoDirectorYCategoria(pelis,"Director","Categoria"));
+
+        List<Pelicula> alPeliculas = new ArrayList<>();
+        alPeliculas.add(pp1);
+        alPeliculas.add(pp2);
+        alPeliculas.add(pp3);
+        alPeliculas.add(pp4);
+        alPeliculas.add(pp5);
+
+        //System.out.println(getPeliMasAntigua(alPeliculas));
+        mostrarPeliculas(getPeliMismoDirector(alPeliculas));
+        //mostrarPeliculas(getPeliMismoDirectorYCategoria(alPeliculas));
+
         HashMap<String, Pelicula> hmPeliculas = new HashMap<String,Pelicula>();
-        for (int i = 0; i < pelis.length; i++) {
-            hmPeliculas.put(pelis[i].getM_sTitulo(),pelis[i]);
+        for (Pelicula alPelicula : alPeliculas) {
+            hmPeliculas.put(alPelicula.getM_sTitulo(), alPelicula);
         }
-        System.out.println(hmPeliculas);
+        //System.out.println(hmPeliculas);
     }
-     public static Pelicula[] mismoDirector(Pelicula[] peliculas,String director){
-         ArrayList<Pelicula> pAux = new ArrayList<>();
-         for (int i = 0; i < peliculas.length; i++) {
-             if (peliculas[i].getM_sDirector().equals(director)) {
-                 pAux.add(peliculas[i]);
+     public static List<Pelicula> getPeliMismoDirector(List<Pelicula> peliculas){
+         List<Pelicula> pAux = new ArrayList<>();
+         for (int i = 0; i < peliculas.size(); i++)
+         {
+             for (int j = 0; j < peliculas.size(); j++) {
+                 if (peliculas.get(j).getM_sDirector().equals(peliculas.get(i).getM_sDirector()) && i != j) {
+                     pAux.add(peliculas.get(i));
+                     break;
+                 }
              }
          }
-         Pelicula[] arr = new Pelicula[pAux.size()];
-
-         for (int i = 0; i < pAux.size(); i++)
-             arr[i] = pAux.get(i);
-         return arr;
+         return pAux;
      }
 
-    public static Pelicula[] mismoDirectorYCategoria(Pelicula[] peliculas, String director, String categoria){
-        Pelicula[] pelis = mismoDirector(peliculas,director);
-        ArrayList<Pelicula> pAux = new ArrayList<>();
-        for (int i = 0; i < pelis.length; i++) {
-            if (pelis[i].getM_sCategoria().equals(categoria)) {
-                pAux.add(pelis[i]);
+    public static List<Pelicula> getPeliMismoDirectorYCategoria(List<Pelicula> peliculas){
+        List<Pelicula> pelis = mismoDirector(peliculas);
+        List<Pelicula> pAux = new ArrayList<>();
+        for (int i = 0; i < peliculas.size(); i++)
+        {
+            for (int j = 0; j < peliculas.size(); j++) {
+                if (peliculas.get(j).getM_sDirector().equals(peliculas.get(i).getM_sDirector()) &&
+                        peliculas.get(j).getM_sCategoria().equals(peliculas.get(i).getM_sCategoria()) &&
+                        i != j)
+                {
+                    pAux.add(peliculas.get(i));
+                    break;
+                }
             }
         }
-        Pelicula[] arr = new Pelicula[pAux.size()];
-
-        for (int i = 0; i < pAux.size(); i++)
-            arr[i] = pAux.get(i);
-        return arr;
+        return pAux;
     }
 
-     public static void mostrarPeliculas(Pelicula[] peliculas){
+     public static void mostrarPeliculas(List<Pelicula> peliculas){
          for (Pelicula pelicula : peliculas) {
              System.out.println(pelicula);
          }
      }
+
+    public static Pelicula getPeliMasAntigua(List<Pelicula> peliculas){
+        Pelicula pAux = new Pelicula();
+        pAux.setM_nAnio(Integer.MAX_VALUE);
+        for (Pelicula pelis : peliculas) {
+            if (pAux.getM_nAnio() > pelis.getM_nAnio())
+                pAux = pelis;
+        }
+        return pAux;
+    }
 }
 

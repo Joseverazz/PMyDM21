@@ -1,5 +1,7 @@
 package clases;
 
+import java.util.List;
+
 public class Pelicula {
 
     private String m_sTitulo;
@@ -85,22 +87,6 @@ public class Pelicula {
     public Pelicula peliculaMasAntigua(Pelicula p1, Pelicula p2, Pelicula p3, Pelicula p4){
 
         return peliculaMasAntigua((peliculaMasAntigua(p1,p2,p3)== null)?p1:peliculaMasAntigua(p1,p2,p3),p4);
-    }
-
-    public Pelicula peliculaMasAntigua(Pelicula[] peliculas){
-        Pelicula pAux = null;
-        boolean bRepetido = false;
-        for (int i = 1; i < peliculas.length; i++) {
-            pAux = peliculaMasAntigua(peliculas[i],peliculas[i-1]);
-            if (pAux == null) {
-                pAux = peliculas[i];
-                bRepetido = true;
-            }
-            else
-                bRepetido = false;
-        }
-        if (bRepetido) return null;
-        return pAux;
     }
 
     @Override
