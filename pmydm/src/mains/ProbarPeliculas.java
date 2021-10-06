@@ -71,7 +71,7 @@ public class ProbarPeliculas {
      }
 
     public static List<Pelicula> getPeliMismoDirectorYCategoria(List<Pelicula> peliculas){
-        List<Pelicula> pelis = mismoDirector(peliculas);
+        List<Pelicula> pelis = getPeliMismoDirector(peliculas);
         List<Pelicula> pAux = new ArrayList<>();
         for (int i = 0; i < peliculas.size(); i++)
         {
