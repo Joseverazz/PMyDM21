@@ -47,7 +47,7 @@ public class ProbarPeliculas {
         alPeliculas.add(pp5);
 
         //System.out.println(getPeliMasAntigua(alPeliculas));
-        mostrarPeliculas(getPeliMismoDirector(alPeliculas));
+        //mostrarPeliculas(getPeliMismoDirector(alPeliculas));
         //mostrarPeliculas(getPeliMismoDirectorYCategoria(alPeliculas));
 
         HashMap<String, Pelicula> hmPeliculas = new HashMap<String,Pelicula>();
@@ -55,9 +55,48 @@ public class ProbarPeliculas {
             hmPeliculas.put(alPelicula.getM_sTitulo(), alPelicula);
         }
         //System.out.println(hmPeliculas);
+        mostrarPeliculas(generarListaDePeliculasPorDirector(hmPeliculas,"Manolo"));
+
+        Pelicula  ppp = generarNuevaPelicula(hmPeliculas,"2","5");
     }
-     public static List<Pelicula> getPeliMismoDirector(List<Pelicula> peliculas){
+
+    private static Pelicula generarNuevaPelicula(HashMap<String, Pelicula> hmPeliculas, String titulo1, String titulo2) {
+        Pelicula pAux = new Pelicula();
+        Pelicula p1 = hmPeliculas.get(titulo1);
+        Pelicula p2 = hmPeliculas.get(titulo2);
+
+        if (p1.getM_sTitulo().equalsIgnoreCase(p2.getM_sTitulo()))
+            pAux.setM_sTitulo(p1.getM_sTitulo());
+
+        if (p1.getM_sCategoria().equalsIgnoreCase(p2.getM_sCategoria()))
+            pAux.setM_sCategoria(p1.getM_sCategoria());
+
+        if (p1.getM_sDirector().equalsIgnoreCase(p2.getM_sDirector()))
+            pAux.setM_sDirector(p1.getM_sDirector());
+
+        if (p1.getM_nAnio() == p2.getM_nAnio())
+            pAux.setM_nAnio(p1.getM_nAnio());
+
+        if (p1.getM_nDuracion() == p2.getM_nDuracion())
+            pAux.setM_nDuracion(p1.getM_nDuracion());
+
+        return pAux;
+    }
+
+    private static List<Pelicula> generarListaDePeliculasPorDirector(HashMap<String, Pelicula> hmPeliculas, String director) {
+        List<Pelicula> pAux = new ArrayList<>();
+
+        for (String i : hmPeliculas.keySet()) {
+            if (hmPeliculas.get(i).getM_sDirector().equals(director )) {
+                pAux.add(hmPeliculas.get(i));
+            }
+        }
+        return pAux;
+    }
+
+    public static List<Pelicula> getPeliMismoDirector(List<Pelicula> peliculas){
          List<Pelicula> pAux = new ArrayList<>();
+         /*
          for (int i = 0; i < peliculas.size(); i++)
          {
              for (int j = 0; j < peliculas.size(); j++) {
@@ -67,12 +106,28 @@ public class ProbarPeliculas {
                  }
              }
          }
+         */
+         for (int i = 0; i < peliculas.size(); i++) {
+             int nNumOcu = nOcurrenciasMismoDirector(peliculas.get(i),peliculas);
+
+             if (nNumOcu > 1)
+                 pAux.add(peliculas.get(i));
+         }
          return pAux;
      }
 
+    private static int nOcurrenciasMismoDirector(Pelicula pelicula, List<Pelicula> peliculas) {
+        int nContOcu = 0;
+        for (Pelicula value : peliculas) {
+            if (pelicula.getM_sDirector().equalsIgnoreCase(value.getM_sDirector()))
+                nContOcu++;
+        }
+        return nContOcu;
+    }
+
     public static List<Pelicula> getPeliMismoDirectorYCategoria(List<Pelicula> peliculas){
-        List<Pelicula> pelis = getPeliMismoDirector(peliculas);
         List<Pelicula> pAux = new ArrayList<>();
+        /*
         for (int i = 0; i < peliculas.size(); i++)
         {
             for (int j = 0; j < peliculas.size(); j++) {
@@ -85,10 +140,29 @@ public class ProbarPeliculas {
                 }
             }
         }
+         */
+
+        for (int i = 0; i < peliculas.size(); i++) {
+            int nNumOcu = nOcurrenciasMismoDirectorYCategoria(peliculas.get(i),peliculas);
+
+            if (nNumOcu > 1)
+                pAux.add(peliculas.get(i));
+        }
+
         return pAux;
     }
 
-     public static void mostrarPeliculas(List<Pelicula> peliculas){
+    private static int nOcurrenciasMismoDirectorYCategoria(Pelicula pelicula, List<Pelicula> peliculas) {
+        int nContOcu = 0;
+        for (Pelicula value : peliculas) {
+            if (pelicula.getM_sDirector().equalsIgnoreCase(value.getM_sDirector()) &&
+                    pelicula.getM_sCategoria().equalsIgnoreCase(value.getM_sCategoria()))
+                nContOcu++;
+        }
+        return nContOcu;
+    }
+
+    public static void mostrarPeliculas(List<Pelicula> peliculas){
          for (Pelicula pelicula : peliculas) {
              System.out.println(pelicula);
          }
